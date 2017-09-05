@@ -24,4 +24,13 @@ class Kele
     # mentor_id = 2299934
   end
 
+  def get_messages(thread_id)
+    response = self.class.get("https://www.bloc.io/api/v1/message_threads", headers: { "authorization" => @auth_token })
+    @message_data = JSON.parse(response.body)
+  end
+
+  def create_message(sender, recipient_id, subject, stripped)
+    self.class.post("https://www.bloc.io/api/v1/messages", body: {"sender": sender, "recipient_id": recipient_id, "subject": subject, "stripped": stripped }, headers: { "authorization" => @auth_token })
+  end
+
 end
